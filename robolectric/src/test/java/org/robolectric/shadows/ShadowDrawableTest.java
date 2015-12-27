@@ -1,9 +1,8 @@
 package org.robolectric.shadows;
 
-import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.Rect;
+import android.content.res.Resources;
+import android.graphics.*;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -147,6 +146,24 @@ public class ShadowDrawableTest {
 
     assertThat(anImage.getIntrinsicHeight()).isEqualTo(251);
     assertThat(anImage.getIntrinsicWidth()).isEqualTo(297);
+  }
+
+  @Test
+  public void differentDrawablesWithSameIntrinsicWidthAndHeight_shouldNotBeEqual() {
+    final Drawable anImage = RuntimeEnvironment.application.getResources().getDrawable(R.drawable.robolectric);
+
+    final Drawable anImage2 = RuntimeEnvironment.application.getResources().getDrawable(R.drawable.robolectric);
+    assertThat(anImage).isNotEqualTo(anImage2);
+  }
+  @Test
+  public void differentDrawablesWithSameIntrinsicWidthAndHeight_shouldNotBeEqual2() {
+    Resources resources = RuntimeEnvironment.application.getResources();
+    Bitmap bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+    BitmapDrawable drawable = new BitmapDrawable(resources, bitmap);
+
+    Bitmap testBitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.RGB_565);
+    BitmapDrawable testDrawable = new BitmapDrawable(resources, testBitmap);
+    assertThat(drawable).isNotEqualTo(testDrawable);
   }
 
   private static class TestDrawable extends Drawable {

@@ -150,6 +150,7 @@ public class ShadowDrawable {
 
     ShadowDrawable that = shadowOf((Drawable) o);
 
+    if (!realDrawable.getConstantState().equals(((Drawable) o).getConstantState())) return false;
     if (intrinsicHeight != that.intrinsicHeight) return false;
     if (intrinsicWidth != that.intrinsicWidth) return false;
     Rect bounds = realDrawable.getBounds();
@@ -158,15 +159,15 @@ public class ShadowDrawable {
 
     return true;
   }
-
-  @Override @Implementation
-  public int hashCode() {
-    Rect bounds = realDrawable.getBounds();
-    int result = bounds != null ? bounds.hashCode() : 0;
-    result = 31 * result + intrinsicWidth;
-    result = 31 * result + intrinsicHeight;
-    return result;
-  }
+//
+//  @Override @Implementation
+//  public int hashCode() {
+//    Rect bounds = realDrawable.getBounds();
+//    int result = bounds != null ? bounds.hashCode() : 0;
+//    result = 31 * result + intrinsicWidth;
+//    result = 31 * result + intrinsicHeight;
+//    return result;
+//  }
 
   @Implementation
   public void setAlpha(int alpha) {
